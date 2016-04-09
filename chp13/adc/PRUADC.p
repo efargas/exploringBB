@@ -90,11 +90,11 @@ CLKLOW:
 DATALOW:
 	CLR	r30.t1
 DATACONTD:
-	SET	r30.t2		 // set the clock low
-	MOV	r0, TIME_CLOCK	 // time for clock low
+	SET	r30.t2		 // set the clock high
+	MOV	r0, TIME_CLOCK	 // time for clock high
 CLKHIGH:
 	SUB	r0, r0, 1	 // decrement the counter by 1 and loop (next line)
-	QBNE	CLKHIGH, r0, 0	 // check if the count is still low
+	QBNE	CLKHIGH, r0, 0	 // check the count
 	LSL	r2, r2, 1
 				 // clock goes low now -- read the response on MISO
 	CLR	r30.t2		 // set the clock low

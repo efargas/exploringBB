@@ -36,6 +36,11 @@ const unsigned char SevenSegmentDisplay::symbols[16] = { //(msb) HGFEDCBA (lsb)
      0b00111001, 0b01011110, 0b01111001, 0b01110001      //CdEF
 };
 
+/**
+ * The constructor for the 7-segment display that defines the number of segments.
+ * @param device The pointer to the SPI device bus
+ * @param numberSegments The number of 7-segment modules attached to the bus
+ */
 SevenSegmentDisplay::SevenSegmentDisplay(SPIDevice *device, int numberSegments) {
 	this->spidevice = device;
 	this->numberSegments = numberSegments;
@@ -72,9 +77,9 @@ int SevenSegmentDisplay::write(float number, int places){
 	// output least-significant digit and divide by base
     for(int i=0; i<this->numberSegments; i++){
        output[i] = this->symbols[intNumber%this->numberBase];
+       if(i==places) output[i] = output[i] | 0b10000000; // turn on "decimal point"
        if(this->isCommonAnode) output[i]=~output[i]; //invert the bits for common anode
        intNumber = intNumber/this->numberBase;
-       if(i==places) output[i] = output[i] | 0b10000000; // turn on "decimal point"
     }
     this->spidevice->write(output, this->numberSegments);
 	return 0;

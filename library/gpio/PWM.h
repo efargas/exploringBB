@@ -35,9 +35,14 @@ using std::string;
 
 namespace exploringBB {
 
+/**
+ * @class PWM
+ * @brief A class to control a basic PWM output -- you must know the exact sysfs filename
+ * for the PWM output.
+ */
 class PWM {
 public:
-	enum POLARITY{ ACTIVE_LOW=0, ACTIVE_HIGH=1 };
+	enum POLARITY{ ACTIVE_HIGH=0, ACTIVE_LOW=1 };
 
 private:
 	string name, path;
